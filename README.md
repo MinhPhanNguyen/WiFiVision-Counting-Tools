@@ -1,349 +1,468 @@
-# CSI Application - WiFi Channel State Information System
+# CSI Application - WiFi Channel State Information for People Counting
 
-## Overview
-This application is a comprehensive Channel State Information (CSI) system for WiFi-based human detection and counting using ESP32 devices. The system consists of a React Native mobile app (CSI App), Flask backend API, and data processing utilities for real-time CSI data collection, analysis, and visualization.
+## Overview & Motivation
 
-## Dataset Access
+This repository presents a comprehensive Channel State Information (CSI) system for WiFi-based people counting using ESP32 devices. The system addresses the growing need for non-intrusive, privacy-preserving indoor occupancy monitoring solutions by leveraging WiFi signals instead of traditional cameras or wearable sensors.
 
-The dataset is available upon request for research purposes only.  
-👉 Please fill this form: [Request Dataset Access](https://forms.gle/xxxx)
+## Dataset Access & Research Applications
+
+This repository includes a comprehensive WiFi CSI dataset for people counting research:
+
+**Dataset Overview:**
+- **9,600 total samples** (8,000 training + 1,600 testing)
+- **8 occupancy levels** (0-7 people: from empty room to 7+ people)
+- **Synchronized CSI + Visual data** (WiFi signals + camera frames for ground truth)
+- **High-quality annotations** with precise people counting and timestamp synchronization
+
+**Research Applications:**
+- WiFi-based people counting and occupancy detection
+- Non-intrusive indoor monitoring systems
+- Smart building occupancy management
+- Privacy-preserving crowd monitoring
+- Real-time occupancy analytics
+
+**Access Policy:** 
+Access to the complete dataset and source code is restricted to academic and research use only. Interested researchers may request access for non-commercial research purposes.
+
+**📂 Dataset & Code Repository:**
+- **Complete Dataset**: [Google Drive Repository](https://drive.google.com/drive/folders/1_zQK3YueUF6yZZ0mbjFeSwa58R1fDccK)
+  - `api/` - Flask backend source code
+  - `CSIApp/` - React Native mobile application 
+  - `data/` - Complete dataset (9,600 samples with CSI + visual data for people counting)
+- **Access Request**: Click on Google Drive link above and request access directly
+- **GitHub Repository**: Public repository with documentation and utilities
+
+**📧 How to Request Access:**
+1. Click the [Google Drive Repository](https://drive.google.com/drive/folders/1_zQK3YueUF6yZZ0mbjFeSwa58R1fDccK) link
+2. Click "Request Access" button in Google Drive
+3. In the message field, include:
+   - Your research affiliation (university/institution)
+   - Intended use case for the people counting dataset
+   - Brief description of your research project
+   - Confirmation of academic/non-commercial use
+
+**Example Request Message:**
+```
+Dear Repository Maintainer,
+
+I am requesting access to the CSI people counting dataset for academic research purposes.
+
+Institution: [Your University Name]
+Research Purpose: WiFi-based people counting and occupancy detection research
+Project: [Brief description of your research]
+Usage: Academic research only, non-commercial
+
+Thank you for your consideration.
+Best regards,
+[Your Name]
+```
 
 ## System Architecture
 
-### Components
-1. **ESP32 WiFi CSI Device** - Hardware sensor for CSI data collection
-2. **Flask Backend API** - Data processing and storage server
-3. **React Native App (CSIApp)** - Mobile interface for data visualization
-4. **Data Processing Utils** - Analysis and visualization tools
-5. **IP Webcam Integration** - Video recording synchronized with CSI data
+![System Architecture](images/hardwareArchitect.png)
 
-## Installation & Setup
+The system consists of four main components working in concert:
 
-### Backend Setup (Flask API)
+### 1. Hardware Layer
+- **ESP32 WiFi CSI Device**: Captures channel state information from WiFi signals
+- **IP Webcam Integration**: Android device recording synchronized video frames
+- **Network Infrastructure**: WiFi router providing communication backbone
 
-1. **Install Python dependencies:**
+### 2. Backend Processing (Flask API)
+- **Data Collection Server**: Receives and processes CSI data from ESP32
+- **Real-time Processing**: CSI amplitude/phase extraction and filtering
+- **Data Storage**: Structured storage of CSI measurements and metadata
+- **API Endpoints**: RESTful services for data access and visualization
+
+### 3. Frontend Application (React Native)
+- **Mobile Interface**: Cross-platform data visualization and control
+- **Real-time Monitoring**: Live CSI signal visualization and analysis
+- **Data Management**: File handling, export, and device configuration
+- **Network Configuration**: IP and device setup management
+
+### 4. Data Processing Pipeline
+- **Signal Processing**: CSI amplitude extraction and noise filtering
+- **Feature Engineering**: Statistical and frequency domain features
+- **Synchronization**: Timestamp-based alignment of CSI and visual data
+- **Analysis Tools**: Visualization and statistical analysis utilities
+
+![3D Visualization](images/3d_paper_visualize.png)
+
+### Mobile Application Screenshots
+
+![Application Screenshot 1](images/Application1.png)
+*Real-time CSI data collection and system status monitoring*
+
+![Application Screenshot 2](images/Application2.png)
+*CSI data visualization and analysis interface*
+
+## Dataset Description
+
+### Dataset Statistics & Distribution
+
+| Split | Samples | Classes | CSI Files | Images | Duration |
+|-------|---------|---------|-----------|---------|----------|
+| Train | 8,000   | 8 (0-7) | 8         | 8,000   | ~4.4 hours |
+| Test  | 1,600   | 8 (0-7) | 8         | 1,600   | ~0.9 hours |
+| **Total** | **9,600** | **8** | **16** | **9,600** | **~5.3 hours** |
+
+### Class Distribution & Balance
+
+| Class ID | Number of People | Description | Train Samples | Test Samples | Total |
+|----------|-----------------|-------------|---------------|--------------|-------|
+| 0 | 0 people | Empty room | 1,000 | 200 | 1,200 |
+| 1 | 1 person | Single occupant | 1,000 | 200 | 1,200 |
+| 2 | 2 people | Two people | 1,000 | 200 | 1,200 |
+| 3 | 3 people | Three people | 1,000 | 200 | 1,200 |
+| 4 | 4 people | Four people | 1,000 | 200 | 1,200 |
+| 5 | 5 people | Five people | 1,000 | 200 | 1,200 |
+| 6 | 6 people | Six people | 1,000 | 200 | 1,200 |
+| 7 | 7 people | Seven people | 1,000 | 200 | 1,200 |
+
+### Data Collection Protocol
+
+**People Counting Methodology:**
+- Manual counting and validation by trained researchers
+- Ground truth verification through synchronized video recordings
+- Precise people counting with timestamp-based synchronization (<50ms accuracy)
+- Cross-validation of occupancy counts by multiple annotators
+- Consistent counting protocol across all recording sessions
+
+**Collection Environment:**
+- Indoor laboratory setting (5m × 4m room)
+- Controlled lighting and environmental conditions
+- ESP32 positioned at fixed location (1.5m height) for optimal CSI coverage
+- IP Webcam recording at 30 FPS with timestamp logging for ground truth
+- Standardized people positioning and movement patterns for each occupancy level
+
+**Ethical Considerations:**
+- Data collected with informed consent from all participants
+- No personally identifiable information stored
+- Privacy-preserving methodology using WiFi signals instead of facial recognition
+- Compliance with institutional research ethics guidelines
+- Anonymous data sharing for research purposes only
+
+![Dataset Sample](images/image_sample.png)
+*Example of synchronized CSI data and corresponding visual frame*
+
+![IP Webcam Setup](images/IPWebcam.png)
+*IP Webcam configuration for synchronized data collection*
+
+### System Requirements
+- **Hardware**: ESP32 development board, WiFi router, Android device (for IP Webcam)
+- **Software**: Python 3.8+, Node.js 16+, Expo CLI, React Native environment
+
+### Installation Summary
 ```bash
+# Backend setup
 pip install -r requirements.txt
-```
-
-2. **Run the Flask server:**
-```bash
 python api/route.py
-```
-The server will start on `http://localhost:5001`
 
-### Frontend Setup (React Native App)
-
-1. **Navigate to CSIApp directory:**
-```bash
-cd CSIApp
+# Frontend setup
+cd CSIApp && npm install
+expo start
 ```
 
-2. **Install dependencies:**
+### Basic Usage
+1. Configure network settings for all devices on same WiFi
+2. Start Flask backend server on laptop/computer
+3. Launch mobile app and configure API endpoints
+4. Begin data collection with synchronized CSI and video recording
+
+*For detailed installation and configuration instructions, see [Appendix A: Implementation Details](#appendix-a-implementation-details)*
+
+## Citation & License
+
+### How to Cite
+If you use this dataset or codebase in your research, please cite:
+
+```bibtex
+@article{csi_people_counting_2025,
+  title={ESP32-Based WiFi CSI Dataset for People Counting: A Multimodal Approach},
+  author={Do Minh Tien and Contributors},
+  journal={IEEE Sensors Journal},
+  year={2025},
+  publisher={IEEE}
+}
+```
+
+### License & Terms
+- **Academic Use**: Free for research and educational purposes
+- **Commercial Use**: Requires separate licensing agreement
+- **Attribution**: Must cite original work in any derived publications
+- **Data Sharing**: Maintain privacy and ethical guidelines when sharing
+
+### Contact & Support
+- **Issues**: Report technical issues via GitHub Issues
+- **Research Collaboration**: Contact corresponding author for academic collaboration
+- **Dataset Access**: Use the Google Drive repository link provided above
+
+---
+
+## Appendix A: Implementation Details
+
+### After Downloading from Google Drive
+
+**1. Extract and Setup Project Structure:**
+After downloading from Google Drive, your folder structure should look like this:
+```
+CSI-Application/
+├── images/ 
+├── utils/ 
+├── visualize/ 
+├── api/                    # Flask Backend
+│   ├── route.py           # Main Flask application
+│   └── ...               # Other backend files
+├── CSIApp/                # React Native Mobile App
+│   ├── package.json      # Node.js dependencies
+│   ├── App.tsx           # Main React Native app
+│   ├── index.ts          # Entry point
+│   ├── components/       # UI components
+│   ├── screens/          # App screens
+│   ├── services/         # API services
+│   └── ...              # Other frontend files
+├── data/                  # Complete Dataset
+│   ├── train/            # Training data (8,000 samples)
+│   │   ├── labels.csv    # Training labels
+│   │   ├── csi/          # CSI data files
+│   │   └── images/       # Camera frames
+│   └── test/             # Test data (1,600 samples)
+│       ├── groundtruth.csv
+│       ├── csi/
+│       └── images/
+└── README.md             # This documentation
+├── requirements.txt.     # Dependecies 
+```
+
+**2. Prerequisites Installation:**
+
+Install required software before proceeding:
+
 ```bash
+# Install Node.js (v16 or higher)
+# Download from: https://nodejs.org/
+
+# Install Python (3.8 or higher)
+# Download from: https://python.org/
+
+# Install Git (if not already installed)
+# Download from: https://git-scm.com/
+
+# Verify installations
+node --version    # Should show v16.x.x or higher
+npm --version     # Should show 8.x.x or higher
+python --version  # Should show Python 3.8.x or higher
+```
+
+**System Requirements Check:**
+
+```bash
+# Check system compatibility
+python -c "import sys; print('✓ Python OK' if sys.version_info >= (3,8) else '✗ Python 3.8+ required')"
+node -e "console.log(process.version >= 'v16' ? '✓ Node.js OK' : '✗ Node.js v16+ required')"
+
+# Check available disk space (dataset is ~2GB)
+df -h .  # Unix/macOS
+# dir   # Windows
+
+# Check RAM (recommended 4GB+)
+free -h  # Linux
+# Activity Monitor > Memory # macOS
+# Task Manager > Performance # Windows
+```
+
+### Complete Setup Instructions
+
+**3. Backend Setup (Flask API):**
+
+```bash
+# Navigate to project root
+cd CSI-Application
+
+# Navigate to API directory
+cd api
+
+# Create Python virtual environment (recommended)
+python -m venv venv
+
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+# venv\Scripts\activate
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Run the Flask server
+python route.py
+```
+The Flask server will start on `http://localhost:5001`
+
+**4. Frontend Setup (React Native App):**
+
+```bash
+# Open new terminal and navigate to CSIApp directory
+cd CSI-Application/CSIApp
+
+# Install Node.js dependencies
 npm install
-```
 
-3. **Install Expo CLI (if not installed):**
-```bash
+# Install Expo CLI globally (if not installed)
 npm install -g @expo/cli
+
+# Install Expo development tools
+npm install -g @expo/ngrok@^4.1.0
+
+# Verify Expo installation
+expo --version
 ```
 
-4. **Configure API endpoint:**
-Create a `.env` file in CSIApp directory:
-```env
-EXPO_PUBLIC_API_HOST=YOUR_COMPUTER_IP
-EXPO_PUBLIC_API_PORT=5001
-EXPO_PUBLIC_API_TIMEOUT=10000
-```
+**5. Mobile App Configuration:**
 
-5. **Update IP configuration:**
+Create a `.env` file in the `CSIApp/` directory:
 ```bash
-npm run update-ip
+# Navigate to CSIApp directory
+cd CSI-Application/CSIApp
+
+# Create environment configuration file
+touch .env
+
+# Edit .env file with your network settings
+echo "EXPO_PUBLIC_API_HOST=YOUR_COMPUTER_IP" >> .env
+echo "EXPO_PUBLIC_API_PORT=5001" >> .env
+echo "EXPO_PUBLIC_API_TIMEOUT=10000" >> .env
 ```
 
-6. **Start the development server:**
+Find your computer's IP address:
 ```bash
+# On macOS/Linux:
+ifconfig | grep "inet " | grep -v 127.0.0.1
+
+# On Windows:
+ipconfig | findstr "IPv4"
+
+# Example IP: 192.168.1.100
+# Update .env file with your actual IP:
+# EXPO_PUBLIC_API_HOST=192.168.1.100
+```
+
+**6. Start the Mobile Application:**
+
+```bash
+# In CSIApp directory, start Expo development server
 npm start
-# or for specific platforms:
-npm run android  # For Android
-npm run ios      # For iOS
+
+# Alternative commands for specific platforms:
+npm run android  # For Android device/emulator
+npm run ios      # For iOS device/simulator  
 npm run web      # For web browser
 ```
 
-## Data Collection Process
+**7. Install Expo Go App (Mobile Device):**
 
-### 1. WiFi Network Configuration
+- **Android**: Download "Expo Go" from Google Play Store
+- **iOS**: Download "Expo Go" from App Store
+- Scan QR code from terminal to run app on your device
 
-**Network Topology:**
-All devices must connect to the same WiFi network for proper communication:
+### Network Configuration & Testing
 
-```
-WiFi Router (Gateway)
-├── ESP32 CSI Device (e.g., 192.168.1.101)
-├── Laptop/Computer (Flask Server) (e.g., 192.168.1.100:5001)
-├── Android Device (IP Webcam) (e.g., 192.168.1.102:8080)
-└── Mobile Device (Expo App) (e.g., 192.168.1.103)
-```
+**8. Verify Network Connectivity:**
 
-**For ESP32 CSI Device:**
-- Connect ESP32 to your WiFi network
-- Configure the device to send CSI data to your computer's IP address
-- Ensure ESP32 and computer can communicate (ping test recommended)
+Ensure all devices are on the same WiFi network:
 
-**For Laptop/Computer (Flask Server):**
-- Connect to the same WiFi network as ESP32
-- Note your computer's IP address: `ipconfig` (Windows) or `ifconfig` (Mac/Linux)
-- Ensure firewall allows connections on port 5001
-
-**For Mobile Devices:**
-- Expo development device: Connect to same WiFi network
-- IP Webcam device: Connect to same WiFi network
-- Test network connectivity between all devices
-
-**Network Requirements:**
-- Stable WiFi connection for all devices
-- All devices on same subnet (usually 192.168.1.x)
-- Open UDP/TCP ports for data transmission
-- Firewall configured to allow local network communication
-
-### 2. CSI Data Collection Flow
-
-```
-ESP32 Device → WiFi CSI Data → Flask API → Data Storage → Mobile App Visualization
-```
-
-**Process:**
-1. ESP32 continuously collects CSI data from WiFi signals
-2. Data is transmitted via UDP/TCP to Flask backend
-3. Flask API processes and stores data in CSV/JSON format
-4. Mobile app fetches processed data for real-time visualization
-5. Optional: IP Webcam records synchronized video
-
-### 3. IP Webcam Setup
-
-**Network Configuration:**
-- **Android device (IP Webcam)**: Connect to WiFi network
-- **Laptop (Flask server)**: Connect to the same WiFi network
-- **Mobile device (Expo app)**: Connect to the same WiFi network
-- All devices must be on the same WiFi subnet for communication
-
-**For Android devices:**
-1. Install IP Webcam app from Google Play Store
-2. Connect Android device to your WiFi network
-3. Configure video settings (resolution, framerate)
-4. Start IP Webcam server
-5. Note the IP address and port displayed (usually :8080)
-6. Example: `192.168.1.102:8080`
-
-**Network Setup Example:**
-```
-WiFi Router: 192.168.1.1
-├── Android (IP Webcam): 192.168.1.102:8080
-├── Laptop (Flask Server): 192.168.1.100:5001
-└── Mobile (Expo App): 192.168.1.103
-```
-
-**Configure in CSI App:**
-- Open CSI App settings
-- Enter IP Webcam address: `192.168.1.102`
-- Enter port: `8080`
-- Test connection before starting data collection
-
-**Integration with CSI data:**
-- Video recording starts/stops with CSI collection
-- Timestamps are synchronized between video and CSI data
-- Combined data useful for ground truth validation
-
-### 4. Data Storage Structure
-
-When running the system, the following data folders are created:
-
-```
-data/
-├── csi_raw/           # Raw CSI data from ESP32
-│   ├── session_YYYYMMDD_HHMMSS.csv
-│   └── ...
-├── processed/         # Processed CSI data
-│   ├── amplitude/     # CSI amplitude data
-│   ├── phase/         # CSI phase data
-│   └── features/      # Extracted features
-├── videos/           # IP Webcam recordings
-│   ├── session_YYYYMMDD_HHMMSS.mp4
-│   └── ...
-├── visualizations/   # Generated plots and charts
-│   ├── heatmaps/
-│   ├── time_series/
-│   └── spectrograms/
-└── logs/            # System logs
-    ├── api_logs/
-    └── device_logs/
-```
-
-### 5. Environment Configuration
-
-**Backend Environment:**
 ```bash
-# Set Python path if needed
-export PYTHONPATH="${PYTHONPATH}:/path/to/Multi-CSI-Frame-App"
+# Test Flask server is running
+curl http://localhost:5001/api/status
 
-# Configure data directory
-export CSI_DATA_DIR="/path/to/data/storage"
-
-# Set Flask environment
-export FLASK_ENV=development
-export FLASK_DEBUG=1
-```
-
-**Frontend Environment (.env file in CSIApp/):**
-```env
-# API Configuration - IP của laptop chạy Flask server
-EXPO_PUBLIC_API_HOST=192.168.1.100
-EXPO_PUBLIC_API_PORT=5001
-EXPO_PUBLIC_API_TIMEOUT=10000
-
-# IP Webcam Configuration - IP của máy Android chạy IP Webcam
-EXPO_PUBLIC_WEBCAM_HOST=192.168.1.102
-EXPO_PUBLIC_WEBCAM_PORT=8080
-
-# Data Collection Settings
-EXPO_PUBLIC_COLLECTION_INTERVAL=100
-EXPO_PUBLIC_BUFFER_SIZE=1000
-```
-
-**Network Setup Commands:**
-```bash
-# Check your computer's IP (Mac/Linux)
-ifconfig | grep "inet " | grep -v 127.0.0.1
-
-# Check your computer's IP (Windows)
-ipconfig | findstr "IPv4"
-
-# Test connection to IP Webcam
-curl http://192.168.1.102:8080
-
-# Test connection to Flask server
+# Test from mobile device (replace with your IP)
 curl http://192.168.1.100:5001/api/status
+
+# Check if devices can communicate
+ping 192.168.1.100  # From mobile device to computer
 ```
 
-## Usage
+**9. Complete System Test:**
 
-### Starting Data Collection
-
-1. **Start Flask Backend:**
 ```bash
-python api/route.py
+# Terminal 1: Start Flask backend
+cd CSI-Application/api
+python route.py
+
+# Terminal 2: Start mobile app (in new terminal)
+cd CSI-Application/CSIApp
+npm start
+
+# Mobile Device: Open Expo Go app and scan QR code
 ```
 
-2. **Power on ESP32 device** and ensure WiFi connection
+### ESP32 & IP Webcam Setup (Optional)
 
-3. **Launch CSI App:**
-```bash
-cd CSIApp && npm start
-```
+**10. ESP32 Configuration:**
+- Flash ESP32 with CSI firmware (contact for ESP32 code)
+- Connect ESP32 to same WiFi network
+- Configure ESP32 to send data to computer IP:5001
 
-4. **Optional: Start IP Webcam** on Android device
+**11. IP Webcam Setup:**
+- Install "IP Webcam" app on Android device
+- Connect Android device to same WiFi network
+- Start IP Webcam server (note IP address and port)
+- Update mobile app settings with webcam IP
 
-5. **Begin Collection:**
-   - Open CSI App on mobile device
-   - Navigate to "Data Collection" screen
-   - Configure collection parameters
-   - Press "Start Collection"
-   - Monitor real-time data visualization
-
-### Data Analysis
-
-**Using Built-in Utilities:**
-```bash
-# Analyze collected data
-python utils/analyze_data.py --input data/csi_raw/session_*.csv
-
-# Generate visualizations
-python visualize/visualize.py --data data/processed/
-
-# Create video from frames
-python utils/generate_video_from_frames.py --input data/visualizations/
-```
-
-## Features
-
-### Mobile App (CSIApp)
-- Real-time CSI data visualization
-- Data collection control
-- Network configuration
-- File management and export
-- Debug information display
-- IP Webcam integration
-
-### Backend API
-- CSI data processing and storage
-- Real-time data streaming
-- File management endpoints
-- Data analysis APIs
-- Video synchronization
-- Device communication
-
-### Data Processing
-- CSI amplitude/phase extraction
-- Noise filtering and smoothing
-- Feature extraction for ML
-- Visualization generation
-- Video frame extraction
-- Statistical analysis
-
-## Technology Stack
-
-**Frontend (React Native):**
-- Expo SDK ~53.0.20
-- React Navigation 7.x
-- TypeScript
-- React Native Chart Kit
-- Axios for API communication
-
-**Backend (Flask):**
-- Flask 3.0+
-- Flask-CORS
-- NumPy, Pandas for data processing
-- Matplotlib, Seaborn for visualization
-- PySerial for device communication
-- PyTorch for ML processing
-
-**Hardware:**
-- ESP32 WiFi modules
-- Android devices (for IP Webcam)
-- WiFi router/access point
-
-## Troubleshooting
-
-### Common Issues
+### Troubleshooting Common Issues
 
 **Connection Problems:**
-- Ensure all devices are on same WiFi network
-- Check firewall settings on computer
-- Verify IP addresses in configuration files
+```bash
+# Check if Flask server is accessible
+netstat -an | grep 5001
 
-**Data Collection Issues:**
-- Check ESP32 power and WiFi connection
-- Verify Flask server is running and accessible
-- Monitor logs in `data/logs/` directory
+# Check firewall settings (macOS)
+sudo pfctl -d  # Temporarily disable firewall for testing
 
-**App Performance:**
-- Close other apps to free memory
-- Check network stability
-- Reduce visualization update frequency
+# Check firewall settings (Windows)
+# Windows Security > Firewall > Allow an app through firewall
 
-## Contributing
+# Verify network connectivity
+ping google.com    # Test internet connection
+ping 192.168.1.1   # Test router connection
+```
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+**Mobile App Issues:**
+```bash
+# Clear Expo cache
+expo r -c
 
-## License
+# Reset Metro bundler
+npx react-native start --reset-cache
 
-This project is for research purposes only. Please cite appropriately if used in academic work.
+# Reinstall dependencies
+rm -rf node_modules package-lock.json
+npm install
+```
 
-## Contact
+**Python/Flask Issues:**
+```bash
+# Check Python version
+python --version
 
-For questions or support, please open an issue in the repository.
+# Reinstall requirements
+pip uninstall -r requirements.txt -y
+pip install -r requirements.txt
+
+# Check for port conflicts
+lsof -i :5001  # Check what's using port 5001
+```
+
+### Data Collection Workflow
+
+**12. Start Data Collection:**
+
+1. Ensure all devices connected to same WiFi
+2. Start Flask backend server
+3. Launch mobile app via Expo Go
+4. Configure network settings in app
+5. Start ESP32 device (if available)
+6. Begin data collection from mobile app
+7. Monitor real-time CSI data and camera feed
+
+*This documentation provides comprehensive information about the CSI Application dataset and implementation. For technical questions or dataset access, please refer to the contact information provided above.*
