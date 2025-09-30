@@ -134,25 +134,12 @@ The system consists of four main components working in concert:
 - Anonymous data sharing for research purposes only
 
 ![Dataset Sample](images/image_sample.png)
-*Example of synchronized CSI data and corresponding visual frame*
 
 ![IP Webcam Setup](images/IPWebcam.png)
-*IP Webcam configuration for synchronized data collection*
 
 ### System Requirements
 - **Hardware**: ESP32 development board, WiFi router, Android device (for IP Webcam)
 - **Software**: Python 3.8+, Node.js 16+, Expo CLI, React Native environment
-
-### Installation Summary
-```bash
-# Backend setup
-pip install -r requirements.txt
-python api/route.py
-
-# Frontend setup
-cd CSIApp && npm install
-expo start
-```
 
 ### Basic Usage
 1. Configure network settings for all devices on same WiFi
@@ -161,34 +148,6 @@ expo start
 4. Begin data collection with synchronized CSI and video recording
 
 *For detailed installation and configuration instructions, see [Appendix A: Implementation Details](#appendix-a-implementation-details)*
-
-## Citation & License
-
-### How to Cite
-If you use this dataset or codebase in your research, please cite:
-
-```bibtex
-@article{csi_people_counting_2025,
-  title={ESP32-Based WiFi CSI Dataset for People Counting: A Multimodal Approach},
-  author={Do Minh Tien and Contributors},
-  journal={IEEE Sensors Journal},
-  year={2025},
-  publisher={IEEE}
-}
-```
-
-### License & Terms
-- **Academic Use**: Free for research and educational purposes
-- **Commercial Use**: Requires separate licensing agreement
-- **Attribution**: Must cite original work in any derived publications
-- **Data Sharing**: Maintain privacy and ethical guidelines when sharing
-
-### Contact & Support
-- **Issues**: Report technical issues via GitHub Issues
-- **Research Collaboration**: Contact corresponding author for academic collaboration
-- **Dataset Access**: Use the Google Drive repository link provided above
-
----
 
 ## Appendix A: Implementation Details
 
@@ -455,5 +414,34 @@ lsof -i :5001  # Check what's using port 5001
 5. Start ESP32 device (if available)
 6. Begin data collection from mobile app
 7. Monitor real-time CSI data and camera feed
+
+
+## Citation & License
+
+### How to Cite
+If you use this dataset or codebase in your research, please cite:
+
+```bibtex
+@article{csi_people_counting_2025,
+  title={ESP32-Based WiFi CSI Dataset for People Counting: A Multimodal Approach},
+  author={Do Minh Tien and Contributors},
+  journal={IEEE Sensors Journal},
+  year={2025},
+  publisher={IEEE}
+}
+```
+
+### License & Terms
+- **Academic Use**: Free for research and educational purposes
+- **Commercial Use**: Requires separate licensing agreement
+- **Attribution**: Must cite original work in any derived publications
+- **Data Sharing**: Maintain privacy and ethical guidelines when sharing
+
+### Contact & Support
+- **Issues**: Report technical issues via GitHub Issues
+- **Research Collaboration**: Contact corresponding author for academic collaboration
+- **Dataset Access**: Use the Google Drive repository link provided above
+
+---
 
 *This documentation provides comprehensive information about the CSI Application dataset and implementation. For technical questions or dataset access, please refer to the contact information provided above.*
