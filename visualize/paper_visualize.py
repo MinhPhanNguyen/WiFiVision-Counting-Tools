@@ -151,8 +151,8 @@ class PaperCSIVisualizer:
         """Load and preprocess CSI data using paper methods"""
         try:
             # Load raw CSI data
-            csi_0_path = "data_input/csi_input/csi_1.csv"
-            csi_7_path = "data_input/csi_input/csi_7.csv"
+            csi_0_path = "csi_7.csv"
+            csi_7_path = "csi_7.csv"
             
             # Load 1 person data (csi_0.csv)
             if os.path.exists(csi_0_path):
