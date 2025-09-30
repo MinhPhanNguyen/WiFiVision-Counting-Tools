@@ -86,25 +86,14 @@ The system consists of four main components working in concert:
 - **Synchronization**: Timestamp-based alignment of CSI and visual data
 - **Analysis Tools**: Visualization and statistical analysis utilities
 
-![3D Visualization](images/3d_paper_visualize.png)
-
-### Mobile Application Screenshots
-
-![Application Screenshot 1](images/Application1.png)
-*Real-time CSI data collection and system status monitoring*
-
-![Application Screenshot 2](images/Application2.png)
-*CSI data visualization and analysis interface*
-
 ## Dataset Description
 
 ### Dataset Statistics & Distribution
 
-| Split | Samples | Classes | CSI Files | Images | Duration |
-|-------|---------|---------|-----------|---------|----------|
-| Train | 8,000   | 8 (0-7) | 8         | 8,000   | ~4.4 hours |
-| Test  | 1,600   | 8 (0-7) | 8         | 1,600   | ~0.9 hours |
-| **Total** | **9,600** | **8** | **16** | **9,600** | **~5.3 hours** |
+| Split | Samples | Classes | CSI Files | Images 
+|-------|---------|---------|-----------|--------
+| Train | 8,000   | 8 (0-7) | 8         | 8,000   
+| Test  | 1,600   | 8 (0-7) | 8         | 1,600   
 
 ### Class Distribution & Balance
 
@@ -118,6 +107,8 @@ The system consists of four main components working in concert:
 | 5 | 5 people | Five people | 1,000 | 200 | 1,200 |
 | 6 | 6 people | Six people | 1,000 | 200 | 1,200 |
 | 7 | 7 people | Seven people | 1,000 | 200 | 1,200 |
+
+![3D Visualization](images/3d_paper_visualize.png)
 
 ### Data Collection Protocol
 
