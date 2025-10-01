@@ -24,16 +24,11 @@ This repository includes a comprehensive WiFi CSI dataset for people counting re
 **Access Policy:** 
 Access to the complete dataset and source code is restricted to academic and research use only. Interested researchers may request access for non-commercial research purposes.
 
-**📂 Dataset & Code Repository:**
-- **Complete Dataset**: [Google Drive Repository](https://drive.google.com/drive/folders/1_zQK3YueUF6yZZ0mbjFeSwa58R1fDccK)
+**📧 How to Request Access:**
+1. Click the [Google Drive Repository](https://drive.google.com/drive/folders/1_zQK3YueUF6yZZ0mbjFeSwa58R1fDccK) link
   - `api/` - Flask backend source code
   - `CSIApp/` - React Native mobile application 
   - `data/` - Complete dataset (9,600 samples with CSI + visual data for people counting)
-- **Access Request**: Click on Google Drive link above and request access directly
-- **GitHub Repository**: Public repository with documentation and utilities
-
-**📧 How to Request Access:**
-1. Click the [Google Drive Repository](https://drive.google.com/drive/folders/1_zQK3YueUF6yZZ0mbjFeSwa58R1fDccK) link
 2. Click "Request Access" button in Google Drive
 3. In the message field, include:
    - Your research affiliation (university/institution)
@@ -59,32 +54,68 @@ Best regards,
 
 ## System Architecture
 
-![System Architecture](images/hardwareArchitect.png)
+### Hardware Setup
 
-The system consists of four main components working in concert:
+The experimental hardware consisted of two ESP32–CP2102 modules, configured as transmitter (TX) and receiver (RX), for wireless signal transmission and reception. Two laptops were used: Laptop 1 ran the transmitter script via VS Code, connected to the ESP32 TX module through a USB cable, while Laptop 2 ran the receiver script via Arduino IDE, connected to the ESP32 RX module. Laptop 2 also handled data acquisition and storage. A monitor and USB interfaces were used to monitor and control the data collection process. The ESP32 modules were positioned 11 meters apart at a height of 1.5 meters.
 
-### 1. Hardware Layer
-- **ESP32 WiFi CSI Device**: Captures channel state information from WiFi signals
-- **IP Webcam Integration**: Android device recording synchronized video frames
-- **Network Infrastructure**: WiFi router providing communication backbone
+<div align="center">
+  <img src="images/Software.png" alt="Hardware Setup Configuration" width="600">
+</div>
 
-### 2. Backend Processing (Flask API)
-- **Data Collection Server**: Receives and processes CSI data from ESP32
-- **Real-time Processing**: CSI amplitude/phase extraction and filtering
-- **Data Storage**: Structured storage of CSI measurements and metadata
-- **API Endpoints**: RESTful services for data access and visualization
+*Overview of the experimental hardware setup, showing the ESP32 modules, laptops with their respective software (VS Code and Arduino IDE), USB connections, monitor, and data storage configuration.*
 
-### 3. Frontend Application (React Native)
-- **Mobile Interface**: Cross-platform data visualization and control
-- **Real-time Monitoring**: Live CSI signal visualization and analysis
-- **Data Management**: File handling, export, and device configuration
-- **Network Configuration**: IP and device setup management
+**Hardware Components:**
+- **ESP32 TX Module**: Transmitter connected to Laptop 1 via USB cable
+- **ESP32 RX Module**: Receiver connected to Laptop 2 via USB cable  
+- **Laptop 1**: Running transmitter script via VS Code
+- **Laptop 2**: Running receiver script via Arduino IDE, handling data acquisition
+- **IP Webcam**: Android device for synchronized video recording
+- **Network Infrastructure**: WiFi networks for device communication
 
-### 4. Data Processing Pipeline
-- **Signal Processing**: CSI amplitude extraction and noise filtering
-- **Feature Engineering**: Statistical and frequency domain features
-- **Synchronization**: Timestamp-based alignment of CSI and visual data
-- **Analysis Tools**: Visualization and statistical analysis utilities
+### Software Setup
+
+The software architecture consists of multiple layers to support data collection, processing, and visualization. The ESP32 modules communicate via two separate Wi-Fi networks: Network A for the Android IP Webcam, and Network B for the ESP32–laptop communication. The backend, implemented using Flask, handles data collection, storage, and exposes RESTful API endpoints. A data processing pipeline performs signal processing, feature extraction, synchronization, and analysis. The frontend mobile application, developed in React Native, provides the interface for data management and network configuration.
+
+<div align="center">
+  <img src="images/hardwareArchitect.png" alt="Software Architecture" width="700">
+</div>
+
+*Software architecture and data flow, showing interactions between ESP32 modules, laptops, Wi-Fi networks, backend processing, data pipeline, and the frontend React Native application.*
+
+**Software Components:**
+1. **Hardware Layer**
+   - ESP32 WiFi CSI devices for signal transmission and reception
+   - IP Webcam integration for synchronized video recording
+   - Network infrastructure with dual WiFi networks
+
+2. **Backend Processing (Flask API)**
+   - Data collection server receiving CSI data from ESP32 modules
+   - Real-time processing for CSI amplitude/phase extraction
+   - Data storage with structured CSI measurements and metadata
+   - RESTful API endpoints for data access and visualization
+
+3. **Frontend Application (React Native)**
+   - Mobile interface for cross-platform data visualization
+   - Real-time monitoring of live CSI signals and analysis
+   - Data management for file handling and export
+   - Network configuration for IP and device setup
+
+4. **Data Processing Pipeline**
+   - Signal processing for CSI amplitude extraction and noise filtering
+   - Feature engineering with statistical and frequency domain features
+   - Synchronization with timestamp-based alignment of CSI and visual data
+   - Analysis tools for visualization and statistical analysis
+
+**Data Flow:** ESP32 TX → Laptop 1 → Wi-Fi Network B → Laptop 2 → Backend → Mobile Application, ensuring synchronized and reproducible acquisition of multimodal data.
+
+### Mobile Application Screenshots
+
+<div align="center">
+  <img src="images/Application1.png" alt="Real-time CSI data collection" width="250" style="margin: 10px;">
+  <img src="images/Application2.png" alt="CSI data visualization" width="250" style="margin: 10px;">
+</div>
+
+*Left: Real-time CSI data collection and system status monitoring | Right: CSI data visualization and analysis interface*
 
 ## Dataset Description
 
