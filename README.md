@@ -1,7 +1,7 @@
 # CSI Application - WiFi Channel State Information for People Counting
 
 **Author:** Nguyễn Phan Đức Minh  
-**Role:** AI Researcher | Deep Learning, Machine Learning, Education Technology
+**Role:** AI Researcher | Deep Learning, Machine Learning
 
 ## Overview & Motivation
 
