@@ -1,5 +1,8 @@
 # CSI Application - WiFi Channel State Information for People Counting
 
+**Author:** Nguyễn Phan Đức Minh  
+**Role:** AI Researcher | Deep Learning, Machine Learning, Education Technology
+
 ## Overview & Motivation
 
 This repository presents a comprehensive Channel State Information (CSI) system for WiFi-based people counting using ESP32 devices. The system addresses the growing need for non-intrusive, privacy-preserving indoor occupancy monitoring solutions by leveraging WiFi signals instead of traditional cameras or wearable sensors.
